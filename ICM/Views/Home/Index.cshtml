@@ -1,0 +1,45 @@
+﻿@model  UserView
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <form  method="post" asp-action="Index" class="mb-2">
+         <div class="form-row">
+              <div class="col-3 mb-2">
+                  <label class="control-label mb-1">Количество УНП</label>
+                  <input type="number" name="amount" class="form-control" placeholder="введите количество" />     
+              </div> 
+              <div class="form-group">
+                  <input type="submit" value="OK" class="btn btn-secondary" />
+              </div>
+         </div>
+    </form>
+
+    <form  method="post" asp-action="PreSave">
+        <div asp-validation-summary="All"  class="validation"></div>
+        <div class="form-group col-4" >
+                <label asp-for="Email" class="control-label mb-1"> </label>
+                <input class="form-control " asp-for="Email"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        <div class="row">
+            
+            @for (int i = 0; i < (int)ViewData["Amount"]; i++)
+            {
+                <div class="form-group col-4" >
+                  <label asp-for="PayerAccountNumber" class="control-label mb-1"> </label>
+                  <input class="form-control" asp-for="PayerAccountNumber"/>  
+                </div>
+            } 
+             <span asp-validation-for="PayerAccountNumber" class="text-danger"></span>
+            
+
+        </div>
+            
+             <div class="form-group mt-3" >
+                  <input type="submit" value="Далее" class="btn btn-secondary" />
+              </div>
+       
+    </form>
+</div>

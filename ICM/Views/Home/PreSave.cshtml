@@ -1,0 +1,99 @@
+﻿@model UserView
+<h3>Состояние УНП</h3>
+@if ((bool)ViewData["isValid"])
+{
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+
+                <th>
+                    <p>УНП</p>
+                </th>
+                <th>
+                    <p>Состояние локальной БД</p>
+                </th>
+                <th>
+                    <p>Состояние внешней БД</p>
+                </th>                     
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.PayerAccountNumber[0])
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.LocalDb[0])
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.ExternalDb[0])
+                </td>
+
+
+            </tr>
+            @for (int i = 1; Model.PayerAccountNumber.Length > i; i++)
+            {
+                <tr>
+                    <td></td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.PayerAccountNumber[i])
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.LocalDb[i])
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.ExternalDb[i])
+                    </td>         
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+
+    <form asp-action="Save" class="mt-4">      
+        <input type="hidden" class="form-control" asp-for="Email"/>
+
+        @for (int i = 0; i < Model.PayerAccountNumber.Length; i++)
+        {
+            <input type="hidden" class="form-control" asp-for="PayerAccountNumber[i]"/>
+        } 
+
+        @for (int i = 0; i < Model.LocalDb.Length; i++)
+        {
+            <input type="hidden" class="form-control" asp-for="LocalDb[i]"/>
+        } 
+        @for (int i = 0; i < Model.ExternalDb.Length; i++)
+        {
+            <input type="hidden" class="form-control " asp-for="ExternalDb[i]"/>
+        } 
+        <div class="row" > 
+                 <input class="btn btn-secondary col-md-3 offset-md-1" type="submit" value="Сохранить"/>
+                <a href="/Home/Index/" class="col-md-3 offset-md-4 btn btn-secondary"> Назад</a> 
+            </div>
+    </form>
+
+
+    }else{
+        <div class="d-flex justify-content-center flex-direction: center mb-2">
+            <h1>Вы ввели недопустимое значение УНП</h1>
+        </div> 
+
+        <a href="/Home/Index" class="col-md-3 offset-md-4 btn btn-secondary" >
+        Назад
+</a>
+    }
