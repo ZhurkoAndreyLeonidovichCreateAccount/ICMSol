@@ -20,7 +20,7 @@ namespace ICM
             //формируем сообщение 
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("Администрация сайта", "Bogestvennypal@yandex.ru"));
+            emailMessage.From.Add(new MailboxAddress("Администрация сайта", "-----"));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Plain)
@@ -35,7 +35,7 @@ namespace ICM
                   //Если захотите ввести свои данные и проверить то в гугл аккаунт нужно сделать двухэтапную аутентификацию и затем сгеренировать пароль 
                     client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                     await client.ConnectAsync("smtp.gmail.com", 465, SecureSocketOptions.Auto);
-                    await client.AuthenticateAsync("palach675246@gmail.com", "yslkwnlpsydtikvt");
+                    await client.AuthenticateAsync("Email", "password");
                     await client.SendAsync(emailMessage);
 
                     await client.DisconnectAsync(true);
